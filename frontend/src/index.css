@@ -1,0 +1,3 @@
+﻿:root { --primary: #0066cc; --background: #f5f7fa; --surface: #ffffff; --text: #1a1a2e; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; background: var(--background); color: var(--text); }

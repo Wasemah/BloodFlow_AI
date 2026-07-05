@@ -1,0 +1,20 @@
+# Core dependencies
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+
+# Google ADK (for agent orchestration)
+google-adk>=2.0.0
+
+# MCP (for tool calling)
+mcp>=1.0.0
+
+# Web framework (for future API)
+fastapi>=0.100.0
+uvicorn>=0.30.0
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# Utilities
+python-multipart>=0.0.9
