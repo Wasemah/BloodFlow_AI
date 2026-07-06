@@ -280,7 +280,18 @@ BloodFlow_AI/
 └── README.md # This file
 ```
 
+
+
+
+
+
+
 🚨 Before You Run
+
+
+
+
+
 
 
 BloodFlow AI consists of three components that must all be running simultaneously:
@@ -294,46 +305,90 @@ If any one of these is missing, some features will not work correctly.
 📥 Installation Order
 Follow these steps in order to avoid the issues encountered during development.
 
+
+
+
 1. Clone the Repository
+
+
 bash
+
 git clone https://github.com/<your-username>/BloodFlow-AI.git
+
 cd BloodFlow-AI
 
+
+
 3. Create and Activate a Python Virtual Environment
+
+   
 Windows:
 
+
 bash
+
 python -m venv .venv
+
 .venv\Scripts\activate
+
 Linux / macOS / WSL:
 
+
 bash
+
 python -m venv .venv
+
 source .venv/bin/activate
 
+
+
 4. Install Backend Dependencies
+
+   
 bash
+
 pip install -r requirements.txt
 
 
-5. Install Frontend Dependencies
+
+
+
+6. Install Frontend Dependencies
+
+
 bash
+
 cd frontend
+
 npm install
+
 cd ..
 
-6. Install Ollama
+
+
+8. Install Ollama
+
+
 Download from: https://ollama.com/download
+
 
 Pull the required models:
 
-bash
-ollama pull llama3.2
-ollama pull nomic-embed-text
-Verify:
 
 bash
+
+ollama pull llama3.2
+
+ollama pull nomic-embed-text
+
+
+Verify:
+
+
+bash
+
 ollama list
+
 You should see:
 
 text
@@ -341,39 +396,66 @@ NAME                    ID              SIZE
 llama3.2:latest         xxxxxxxxxxxx    2.1 GB
 nomic-embed-text:latest xxxxxxxxxxxx    274 MB
 
+
+
+
 🚀 Start the Application
+
 Open three separate terminals.
 
+
 Terminal 1 — Backend
+
 Windows:
 
+
 bash
+
 .venv\Scripts\activate
+
 python -m bloodflow_ai.run_server
+
 Linux / macOS / WSL:
 
+
 bash
+
 source .venv/bin/activate
+
 python -m bloodflow_ai.run_server
+
 Backend URL: http://localhost:8000
+
 API Docs: http://localhost:8000/docs
 
+
 Terminal 2 — Frontend
+
 bash
+
 cd frontend
+
 npm run dev
+
 Frontend URL: http://localhost:5173
 
+
 Terminal 3 — Ollama
+
 bash
+
 ollama serve
+
 Keep this terminal running while using the application.
+
 
 
 
 💻 GitHub Codespaces Users
 
+
 If you're running the project in GitHub Codespaces, do not use http://localhost:8000 or http://localhost:5173 inside your browser.
+
 
 Use the Forwarded Port URLs
 Service	URL Format
@@ -381,11 +463,13 @@ Frontend	https://<codespace-name>-5173.app.github.dev
 Backend	https://<codespace-name>-8000.app.github.dev
 Example:
 
+
 text
 Frontend: https://bloodflow-ai-12345-5173.app.github.dev
 Backend:  https://bloodflow-ai-12345-8000.app.github.dev
 Configure Frontend Environment
 Create a .env file in the frontend directory:
+
 
 bash
 VITE_API_URL=https://<codespace-name>-8000.app.github.dev
