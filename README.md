@@ -82,75 +82,67 @@ BloodFlow AI supports both local inference through Ollama and optional cloud inf
 
 
 🔄 Workflow
+
+
+
+
 1️⃣ Emergency Request
 Hospitals submit a free-text emergency request.
 
 Example:
-
 "Need 2 units of O-negative blood at Square Hospital immediately."
+
+
 
 2️⃣ Emergency Triage
 The Emergency Triage Agent extracts:
 
 Hospital Name
-
 Blood Group
-
 Required Units
-
 Urgency Level
-
 Deadline
+
 
 3️⃣ Donor Matching
 The Matching Agent evaluates donors using:
 
 Blood compatibility (medical rules)
-
 Eligibility requirements (age, cooldown, availability)
-
 Geographic proximity
-
 Historical response rate
-
 Donation recency
+
 
 4️⃣ Communication
 The Communication Agent:
 
 Contacts ranked donors sequentially
-
 Tracks communication history
-
 Uses memory to avoid duplicate notifications
-
 Stops once a donor accepts
+
 
 5️⃣ Explainability
 The Explainability Agent produces:
 
 Score breakdown (component contributions)
-
 Natural-language reasoning
-
 Confidence score
-
 Complete audit trail
+
 
 6️⃣ Incident Report
 A complete Markdown report is automatically generated containing:
 
 Emergency summary
-
 Workflow timeline
-
 Selected donor
-
 Decision explanation
-
 Performance metrics
-
 Confidence score
+
+
 
 ## 💡 Why Multi-Agent Instead of One LLM?
 
@@ -175,6 +167,9 @@ A monolithic LLM approach often suffers from:
 | **Observability** | Granular telemetry and metrics |
 | **Local Inference** | Run entirely offline using Ollama, eliminating API costs and cloud dependencies |
 
+
+
+
 ## ⚙️ Technical Stack
 
 ### AI Components
@@ -186,41 +181,39 @@ A monolithic LLM approach often suffers from:
 | **Generation** | A supported Ollama chat model (e.g., llama3.2, gemma3, mistral) | Answer generation |
 | **Optional Cloud LLM** | Google Gemini | Alternative inference path |
 
+
+
 The project includes a fully functional local RAG pipeline powered by Ollama:
 
 ✅ WHO guideline retrieval
-
 ✅ Local embeddings (nomic-embed-text)
-
 ✅ Semantic vector search
-
 ✅ Hallucination reduction
-
 ✅ Compliance-focused responses
-
 ✅ No API keys required
 
 Local inference through Ollama enables offline execution, reduces latency, protects sensitive healthcare-inspired data, and removes dependency on external APIs during demonstrations.
 
+
+
 🖥️ Frontend Dashboard
+
 The React dashboard provides:
 
 Emergency request submission
-
 Live workflow visualization
-
 Donor ranking display
-
 Explainability view
-
 Incident report viewer
-
 AI Copilot interface
-
 Workflow monitoring
 
+
 🛠️ Technology Stack
+
+
 Backend
+
 Component	Technology	Role
 Language	Python 3.10+	Core implementation
 API Framework	FastAPI	REST endpoints
@@ -234,13 +227,20 @@ LLM Inference	Ollama	Local LLM for RAG
 Embeddings	nomic-embed-text	Vector embeddings
 Generation	A supported Ollama chat model (e.g., llama3.2, gemma3, mistral)	Answer generation
 Optional Cloud LLM	Google Gemini	Alternative inference path
+
+
+
 Frontend
+
 Component	Technology	Role
 Framework	React 18	UI components
 Build Tool	Vite	Development & build
 Styling	Tailwind CSS	Utility-first styling
 Routing	React Router DOM	Page navigation
 HTTP Client	Axios	API communication
+
+
+
 📂 Project Structure
 text
 BloodFlow_AI/
@@ -278,7 +278,13 @@ BloodFlow_AI/
 ├── media/                        # Screenshots & assets
 ├── requirements.txt             # Python dependencies
 └── README.md                    # This file
+
+
+
+
 🚨 Before You Run
+
+
 BloodFlow AI consists of three components that must all be running simultaneously:
 
 Component	Purpose
@@ -294,7 +300,8 @@ Follow these steps in order to avoid the issues encountered during development.
 bash
 git clone https://github.com/<your-username>/BloodFlow-AI.git
 cd BloodFlow-AI
-2. Create and Activate a Python Virtual Environment
+
+3. Create and Activate a Python Virtual Environment
 Windows:
 
 bash
@@ -305,15 +312,19 @@ Linux / macOS / WSL:
 bash
 python -m venv .venv
 source .venv/bin/activate
-3. Install Backend Dependencies
+
+4. Install Backend Dependencies
 bash
 pip install -r requirements.txt
-4. Install Frontend Dependencies
+
+
+5. Install Frontend Dependencies
 bash
 cd frontend
 npm install
 cd ..
-5. Install Ollama
+
+6. Install Ollama
 Download from: https://ollama.com/download
 
 Pull the required models:
@@ -331,6 +342,7 @@ text
 NAME                    ID              SIZE
 llama3.2:latest         xxxxxxxxxxxx    2.1 GB
 nomic-embed-text:latest xxxxxxxxxxxx    274 MB
+
 🚀 Start the Application
 Open three separate terminals.
 
@@ -359,7 +371,10 @@ bash
 ollama serve
 Keep this terminal running while using the application.
 
+
+
 💻 GitHub Codespaces Users
+
 If you're running the project in GitHub Codespaces, do not use http://localhost:8000 or http://localhost:5173 inside your browser.
 
 Use the Forwarded Port URLs
@@ -414,6 +429,8 @@ json
     "total": 97.6
   }
 }
+
+
 🛠️ Troubleshooting
 Backend starts but frontend says ERR_CONNECTION_REFUSED
 Cause: Backend isn't running or frontend is pointing to the wrong API URL.
@@ -439,9 +456,7 @@ Workflow fails
 Check that:
 
 ✅ Backend is running
-
 ✅ Ollama is running
-
 ✅ Required models are installed
 
 bash
@@ -485,21 +500,18 @@ Incident report is generated
 
 
 🎯 Project Goals
+
 ✅ Demonstrate collaborative AI agents
-
 ✅ Improve emergency blood coordination
-
 ✅ Increase transparency using Explainable AI
-
 ✅ Integrate Retrieval-Augmented Generation
-
 ✅ Showcase production-style AI architecture
-
 ✅ Provide local inference (no API keys required)
-
 ✅ Generate auditable incident reports
 
+
 🚀 Future Roadmap
+
 Priority	Feature	Description
 High	WebSocket Real-time Updates	Live dashboard updates
 High	SMS/Email Integration	Real donor communication
@@ -507,67 +519,58 @@ Medium	Persistent Database	PostgreSQL/SQLite support
 Medium	Geographic Visualization	OpenStreetMap donor mapping
 Low	Mobile Application	Donor mobile app
 Low	Multi-Hospital Coordination	Cross-hospital workflow
+
+
 👥 Contributors
+
 Wasemah Binta Amran
+
 Project Lead & AI Systems Engineer
-
 System Architecture & Design
-
 Multi-Agent System Development
-
 Backend Engineering (FastAPI)
-
 Explainability Engine
-
 RAG Pipeline Development
-
 FastAPI Integration
-
 Documentation & AI_CONTEXT
-
 Project Coordination
 
 Shayer Mahmud Sowmik
+
 Frontend Engineer
-
 React Dashboard Development
-
 User Interface & User Experience
-
 Frontend-Backend Integration
-
 Dashboard Components
 
 Farjana Binta Amran
+
 Media & Presentation
-
 Demo Video Editing
-
 Visual Assets
-
 Media Gallery Preparation
 
+
 🙏 Acknowledgments
+
 This project was developed as part of the Kaggle AI Agents Intensive Capstone.
 
 We gratefully acknowledge the use of AI-assisted development tools—including GitHub Copilot and OpenAI ChatGPT—which supported brainstorming, debugging, architecture discussions, documentation refinement, interface design, and software development throughout the project. All architectural decisions, implementation, integration, testing, and final submission were completed and verified by the project contributors.
 
 Special thanks to Farjana Binta Amran for editing and producing the project demonstration video.
 
+
+
 📚 References
+
 World Health Organization. Blood Donor Selection: Guidelines on Assessing Donor Suitability for Blood Donation. 2012.
-
 FastAPI Documentation. FastAPI: High-Performance Python API Framework. https://fastapi.tiangolo.com
-
 React Documentation. React: A JavaScript Library for Building User Interfaces. https://react.dev
-
 Ollama Documentation. Ollama: Get Up and Running with Large Language Models Locally. https://ollama.com
-
 Google Agent Development Kit (ADK). Build and Deploy AI Agents. https://google.github.io/adk-docs/
-
 Model Context Protocol (MCP). Anthropic's Model Context Protocol for AI Tools. https://modelcontextprotocol.io
-
 Kaggle. AI Agents Intensive Capstone. https://www.kaggle.com/
+
 
 📜 License
 This project is intended for educational and research purposes within the Kaggle AI Agents Intensive Capstone.
