@@ -286,300 +286,395 @@ BloodFlow_AI/
 
 
 
-🚨 Before You Run
+# 🚀 Getting Started
 
+Follow the steps below to set up and run BloodFlow AI successfully.
 
+---
 
+# 📋 Prerequisites
 
+Before starting, make sure you have the following installed:
 
+- Python 3.10 or later
+- Node.js 18 or later
+- Git
+- Ollama (for running the local AI models)
 
+Download Ollama from:
 
-BloodFlow AI consists of three components that must all be running simultaneously:
+https://ollama.com/download
 
-Component	Purpose
-✅ Backend (FastAPI)	REST API server
-✅ Frontend (React + Vite)	Web dashboard
-✅ Ollama (Local LLM)	RAG embeddings & generation
-If any one of these is missing, some features will not work correctly.
+> **Why Ollama?**
+>
+> BloodFlow AI uses **local AI models** instead of relying entirely on cloud APIs. This allows the application to work offline after the models are downloaded, reduces API costs, improves privacy, and is better suited for environments with unreliable internet connectivity.
 
-📥 Installation Order
-Follow these steps in order to avoid the issues encountered during development.
+---
 
+# 1️⃣ Clone the Repository
 
-
-
-1. Clone the Repository
-
-
-bash
-
+```bash
 git clone https://github.com/<your-username>/BloodFlow-AI.git
 
 cd BloodFlow-AI
+```
 
+---
 
+# 2️⃣ Create a Python Virtual Environment
 
-3. Create and Activate a Python Virtual Environment
+A virtual environment keeps the project's Python packages separate from other projects.
 
-   
-Windows:
+### Windows
 
-
-bash
-
+```bash
 python -m venv .venv
 
 .venv\Scripts\activate
+```
 
-Linux / macOS / WSL:
+### Linux / macOS / WSL
 
-
-bash
-
+```bash
 python -m venv .venv
 
 source .venv/bin/activate
+```
 
+After activation, your terminal should look similar to:
 
+```text
+(.venv) user@computer$
+```
 
-4. Install Backend Dependencies
+---
 
-   
-bash
+# 3️⃣ Install Backend Dependencies
 
+Install all required Python packages.
+
+```bash
 pip install -r requirements.txt
+```
 
+Wait until the installation finishes before continuing.
 
+---
 
+# 4️⃣ Install Frontend Dependencies
 
+Open the frontend folder and install the required Node packages.
 
-6. Install Frontend Dependencies
-
-
-bash
-
+```bash
 cd frontend
 
 npm install
 
 cd ..
+```
 
+---
 
+# 5️⃣ Install the Required AI Models
 
-8. Install Ollama
+BloodFlow AI requires two local AI models.
 
+| Model | Purpose |
+|--------|----------|
+| llama3.2 | Generates responses |
+| nomic-embed-text | Creates embeddings for RAG search |
 
-Download from: https://ollama.com/download
+Download them once:
 
-
-Pull the required models:
-
-
-bash
-
+```bash
 ollama pull llama3.2
 
 ollama pull nomic-embed-text
+```
 
+This may take several minutes depending on your internet connection.
 
-Verify:
+Verify that the models were installed successfully:
 
-
-bash
-
+```bash
 ollama list
+```
 
-You should see:
+You should see something similar to:
 
-text
-NAME                    ID              SIZE
-llama3.2:latest         xxxxxxxxxxxx    2.1 GB
-nomic-embed-text:latest xxxxxxxxxxxx    274 MB
+```text
+NAME                    SIZE
+llama3.2                2.1 GB
+nomic-embed-text        274 MB
+```
 
+---
 
+# ▶️ Run the Application
 
+BloodFlow AI consists of **three independent services** that must run simultaneously.
 
-🚀 Start the Application
+Open **three separate terminals**.
 
-Open three separate terminals.
+| Terminal | Runs | Purpose |
+|----------|------|---------|
+| Terminal 1 | Backend | Runs the FastAPI server |
+| Terminal 2 | Frontend | Runs the React dashboard |
+| Terminal 3 | Ollama | Runs the local AI models |
 
+---
 
-Terminal 1 — Backend
+## Terminal 1 — Backend
 
-Windows:
+Activate the virtual environment.
 
+### Windows
 
-bash
-
+```bash
 .venv\Scripts\activate
+```
 
-python -m bloodflow_ai.run_server
+### Linux / macOS / WSL
 
-Linux / macOS / WSL:
-
-
-bash
-
+```bash
 source .venv/bin/activate
+```
 
+Start the backend server:
+
+```bash
 python -m bloodflow_ai.run_server
+```
 
-Backend URL: http://localhost:8000
+If successful, open:
 
-API Docs: http://localhost:8000/docs
+```
+http://localhost:8000/docs
+```
 
+You should see the **BloodFlow AI Swagger API** page.
 
-Terminal 2 — Frontend
+---
 
-bash
+## Terminal 2 — Frontend
 
+```bash
 cd frontend
 
 npm run dev
+```
 
-Frontend URL: http://localhost:5173
+If successful, Vite will display something similar to:
 
+```text
+Local:
 
-Terminal 3 — Ollama
+http://localhost:5173
+```
 
-bash
+Open the displayed URL in your browser.
 
+---
+
+## Terminal 3 — Ollama
+
+Start the local AI server.
+
+```bash
 ollama serve
+```
 
-Keep this terminal running while using the application.
+Leave this terminal running while using the application.
 
+---
 
+# 💻 GitHub Codespaces Users
 
+If you are running the project inside **GitHub Codespaces**, do **not** use:
 
-💻 GitHub Codespaces Users
+```
+http://localhost:8000
+```
 
+or
 
-If you're running the project in GitHub Codespaces, do not use http://localhost:8000 or http://localhost:5173 inside your browser.
+```
+http://localhost:5173
+```
 
+inside your browser.
 
-Use the Forwarded Port URLs
-Service	URL Format
-Frontend	https://<codespace-name>-5173.app.github.dev
-Backend	https://<codespace-name>-8000.app.github.dev
+Instead, use the forwarded port URLs provided by GitHub.
+
 Example:
 
+```
+Frontend
 
-text
-Frontend: https://bloodflow-ai-12345-5173.app.github.dev
-Backend:  https://bloodflow-ai-12345-8000.app.github.dev
-Configure Frontend Environment
-Create a .env file in the frontend directory:
+https://your-codespace-5173.app.github.dev
 
+Backend
 
-bash
-VITE_API_URL=https://<codespace-name>-8000.app.github.dev
-🧪 Example API Request
-Health Check
-bash
-curl http://localhost:8000/
-Response:
+https://your-codespace-8000.app.github.dev
+```
 
-json
-{
-  "service": "BloodFlow AI API",
-  "version": "1.0.0",
-  "status": "running"
-}
-Run a Workflow
-bash
-curl -X POST http://localhost:8000/workflow \
-  -H "Content-Type: application/json" \
-  -d '{"input":"Need O- blood at Square Hospital before 8 PM"}'
-Response:
+Create a file named:
 
-json
-{
-  "workflow_id": "wf_20260705170000_12345",
-  "status": "success",
-  "donor_contacted": "Jannat Begum",
-  "total_duration": 0.266,
-  "attempts": 1,
-  "reasoning": "Jannat Begum was selected because...",
-  "score_breakdown": {
-    "components": {
-      "Blood Compatibility": 40.0,
-      "Availability": 20.0,
-      "Distance": 18.0,
-      "Response Rate": 9.6,
-      "Cooldown": 10.0
-    },
-    "total": 97.6
-  }
-}
+```
+frontend/.env
+```
 
+Add:
 
-🛠️ Troubleshooting
-Backend starts but frontend says ERR_CONNECTION_REFUSED
-Cause: Backend isn't running or frontend is pointing to the wrong API URL.
+```env
+VITE_API_URL=https://your-codespace-8000.app.github.dev
+```
 
-Solution: Verify:
+Restart the frontend after creating the file.
 
-bash
-# Check if backend is running
-curl http://localhost:8000/
-For Codespaces, use the forwarded port URL instead of localhost.
+---
 
-vite: Permission denied
-text
-sh: vite: Permission denied
-Solution:
+# 🧪 Verify Everything
 
-bash
-chmod +x node_modules/.bin/vite
-ollama: command not found
-Solution: Ollama is not installed. Download from: https://ollama.com/download
-
-Workflow fails
-Check that:
+Before using the application, confirm the following:
 
 ✅ Backend is running
-✅ Ollama is running
-✅ Required models are installed
 
-bash
+```
+http://localhost:8000/docs
+```
+
+(or the forwarded Codespaces URL)
+
+✅ Frontend dashboard opens successfully
+
+✅ Ollama server is running
+
+✅ Both AI models are installed
+
+```bash
 ollama list
-Address already in use
-text
-ERROR: Address already in use
-Solution: Your backend is already running. Instead of starting another server, simply open http://localhost:8000/docs.
+```
 
-Codespaces cannot connect
-If using Codespaces, never use localhost:8000 inside your browser. Use the forwarded port URL instead.
+✅ Workflow executes successfully
 
-API returns "Field required"
-The /workflow endpoint expects a JSON body:
+✅ Incident report is generated
 
-json
-{
-  "input": "Need O- blood at Square Hospital",
-  "use_gemini": false
-}
-✅ Verify Everything
-Before using the application, verify:
+✅ RAG Copilot answers WHO guideline questions
 
-Backend is running (http://localhost:8000/docs loads)
+---
 
-Frontend is running (http://localhost:5173 loads)
+# 🛠️ Troubleshooting
 
-Ollama is running (ollama list shows models)
+## ❌ `ollama: command not found`
 
-Ollama chat model is downloaded
+**Cause**
 
-nomic-embed-text is downloaded
+Ollama is not installed or is not available in your system PATH.
 
-Swagger UI opens successfully
+**Solution**
 
-Dashboard loads
+Install Ollama:
 
-Workflow completes successfully
+https://ollama.com/download
 
-Incident report is generated
+Restart your terminal.
 
+Verify:
+
+```bash
+ollama --version
+```
+
+---
+
+## ❌ `sh: vite: Permission denied`
+
+This may occur in Linux or GitHub Codespaces.
+
+Run:
+
+```bash
+cd frontend
+
+chmod +x node_modules/.bin/vite
+
+npm run dev
+```
+
+If the issue persists:
+
+```bash
+rm -rf node_modules package-lock.json
+
+npm install
+
+npm run dev
+```
+
+---
+
+## ❌ Frontend loads but workflow does not work
+
+Check that:
+
+- Backend is running
+- The frontend `.env` file contains the correct `VITE_API_URL`
+- Port 8000 is correctly forwarded (Codespaces users)
+
+---
+
+## ❌ Swagger API page does not open
+
+The backend is not running.
+
+Start it again:
+
+```bash
+python -m bloodflow_ai.run_server
+```
+
+Then visit:
+
+```
+http://localhost:8000/docs
+```
+
+---
+
+## ❌ Copilot does not answer
+
+Make sure:
+
+- Ollama is running
+- `llama3.2` is installed
+- `nomic-embed-text` is installed
+
+Verify:
+
+```bash
+ollama list
+```
+
+---
+
+# ✅ Final Checklist
+
+Before submitting or demonstrating the project, verify:
+
+- ✅ Python virtual environment activated
+- ✅ Backend dependencies installed
+- ✅ Frontend dependencies installed
+- ✅ Ollama installed
+- ✅ llama3.2 downloaded
+- ✅ nomic-embed-text downloaded
+- ✅ Backend running
+- ✅ Frontend running
+- ✅ Ollama server running
+- ✅ Workflow completes successfully
+- ✅ Dashboard loads correctly
+- ✅ Incident report is generated
+- ✅ RAG Copilot answers WHO guideline questions
 
 🎯 Project Goals
 
