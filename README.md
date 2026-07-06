@@ -241,46 +241,44 @@ HTTP Client	Axios	API communication
 
 
 
-📂 Project Structure
-text
+## 📂 Project Structure
+```
 BloodFlow_AI/
 │
-├── bloodflow_ai/                # Main backend package
-│   ├── agents/                  # Multi-agent implementations
-│   │   ├── orchestrator/        # Workflow coordinator
-│   │   ├── emergency_triage/    # Free-text parsing
-│   │   ├── donor_matching/      # Donor filtering & ranking
-│   │   └── communication/       # Sequential outreach
-│   │
-│   ├── explainability/          # Decision reasoning & scoring
-│   ├── telemetry/               # Event bus, timeline, metrics
-│   ├── intelligence/            # Agent registry, workflow graph
-│   ├── reports/                 # Incident report generation
-│   ├── ui_api/                  # Dashboard state models
-│   ├── memory/                  # Donor cooldown tracking
-│   ├── rag/                     # RAG pipeline (Ollama)
-│   ├── tools/                   # Business logic
-│   ├── schemas/                 # Pydantic models
-│   ├── workflows/               # Pipeline definitions
-│   ├── data/                    # Donors CSV & WHO guidelines
-│   └── api_server.py            # FastAPI main entry
+├── bloodflow_ai/ # Main backend package
+│ ├── agents/ # Multi-agent implementations
+│ │ ├── orchestrator/ # Workflow coordinator
+│ │ ├── emergency_triage/ # Free-text parsing
+│ │ ├── donor_matching/ # Donor filtering & ranking
+│ │ └── communication/ # Sequential outreach
+│ │
+│ ├── explainability/ # Decision reasoning & scoring
+│ ├── telemetry/ # Event bus, timeline, metrics
+│ ├── intelligence/ # Agent registry, workflow graph
+│ ├── reports/ # Incident report generation
+│ ├── ui_api/ # Dashboard state models
+│ ├── memory/ # Donor cooldown tracking
+│ ├── rag/ # RAG pipeline (Ollama)
+│ ├── tools/ # Business logic
+│ ├── schemas/ # Pydantic models
+│ ├── workflows/ # Pipeline definitions
+│ ├── data/ # Donors CSV & WHO guidelines
+│ └── api_server.py # FastAPI main entry
 │
-├── frontend/                     # React frontend
-│   ├── src/
-│   │   ├── components/          # UI components
-│   │   ├── pages/               # Dashboard, Copilot, Reports
-│   │   ├── services/            # API client
-│   │   └── App.jsx              # Main app
-│   ├── package.json             # Dependencies
-│   └── vite.config.js           # Vite configuration
+├── frontend/ # React frontend
+│ ├── src/
+│ │ ├── components/ # UI components
+│ │ ├── pages/ # Dashboard, Copilot, Reports
+│ │ ├── services/ # API client
+│ │ └── App.jsx # Main app
+│ ├── package.json # Dependencies
+│ └── vite.config.js # Vite configuration
 │
-├── AI_CONTEXT/                   # Architecture documentation
-├── media/                        # Screenshots & assets
-├── requirements.txt             # Python dependencies
-└── README.md                    # This file
-
-
-
+├── AI_CONTEXT/ # Architecture documentation
+├── media/ # Screenshots & assets
+├── requirements.txt # Python dependencies
+└── README.md # This file
+```
 
 🚨 Before You Run
 
