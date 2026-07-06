@@ -1,19 +1,16 @@
 🩸 BloodFlow AI
+<p align="center"> <img src="media/dashboard.png" alt="BloodFlow AI Dashboard" width="800"/> </p>
 A Multi-Agent AI System for Emergency Blood Donation Coordination
 
 Built for the Kaggle AI Agents Intensive Capstone, BloodFlow AI demonstrates how specialized AI agents can collaboratively process emergency blood requests, identify compatible donors, coordinate outreach, and generate transparent decision reports.
 
-https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white
-https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat&logo=fastapi&logoColor=white
-https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react&logoColor=black
-https://img.shields.io/badge/Ollama-Local_LLM-000000?style=flat&logo=ollama&logoColor=white
-https://img.shields.io/badge/Kaggle-AI_Agents-20BEFF?style=flat&logo=kaggle&logoColor=white
-https://img.shields.io/badge/License-Educational-FF6B6B?style=flat
-
+<p align="center"> <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white" alt="Python"/></a> <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat&logo=fastapi&logoColor=white" alt="FastAPI"/></a> <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react&logoColor=black" alt="React"/></a> <a href="https://ollama.com/"><img src="https://img.shields.io/badge/Ollama-Local_LLM-000000?style=flat&logo=ollama&logoColor=white" alt="Ollama"/></a> <a href="https://www.kaggle.com/"><img src="https://img.shields.io/badge/Kaggle-AI_Agents-20BEFF?style=flat&logo=kaggle&logoColor=white" alt="Kaggle"/></a> <a href="#"><img src="https://img.shields.io/badge/License-Educational-FF6B6B?style=flat" alt="License"/></a> </p>
 📖 Overview
 In medical emergencies, every minute matters. BloodFlow AI automates the coordination process by transforming unstructured hospital requests into actionable workflows through a team of specialized AI agents.
 
 The system combines Multi-Agent Orchestration, Retrieval-Augmented Generation (RAG), Explainable AI (XAI), and a modern web dashboard to simulate an intelligent emergency blood donation platform.
+
+BloodFlow AI supports both local inference through Ollama and optional cloud inference using Google Gemini, depending on configuration. This flexibility enables offline execution, reduces latency, protects sensitive healthcare-inspired data, and removes dependency on external APIs during demonstrations.
 
 ✨ Key Features
 Feature	Description
@@ -32,8 +29,8 @@ text
 ┌─────────────────────────────────────────────────────────────────┐
 │                    BLOODFLOW AI PIPELINE                        │
 ├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Hospital Emergency Request (Raw Text)                         │
+│                                                                 │
+│  Hospital Emergency Request (Raw Text)                          │
 │         │                                                       │
 │         ▼                                                       │
 │  ┌─────────────┐                                                │
@@ -47,16 +44,26 @@ text
 │ └─┬──┘ └───┬────┘ └────┬─────┘                                  │
 │   │        │           │                                        │
 │   └────────┼───────────┘                                        │
-│            ▼                                                     │
+│            ▼                                                    │
 │     ┌───────────┐                                               │
 │     │  MEMORY   │                                               │
 │     └───────────┘                                               │
-│            │                                                     │
-│            ▼                                                     │
+│            │                                                    │
+│            ▼                                                    │
+│     ┌───────────────┐                                           │
+│     │ EXPLAINABILITY│  ← Score breakdown & reasoning            │
+│     └───────────────┘                                           │
+│            │                                                    │
+│            ▼                                                    │
 │     ┌───────────┐                                               │
-│     │ RESPONSE  │                                               │
+│     │  WHO RAG  │  ← Retrieval-augmented medical guidance       │ 
 │     └───────────┘                                               │
-│                                                                  │
+│            │                                                    │
+│            ▼                                                    │
+│     ┌───────────────────┐                                       │
+│     │ DASHBOARD + REPORT│                                       │
+│     └───────────────────┘                                       │
+│                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 🔄 Workflow
 1️⃣ Emergency Request
@@ -153,6 +160,8 @@ The project includes a fully functional local RAG pipeline powered by Ollama:
 
 ✅ No API keys required
 
+Local inference through Ollama enables offline execution, reduces latency, protects sensitive healthcare-inspired data, and removes dependency on external APIs during demonstrations.
+
 🖥️ Frontend Dashboard
 The React dashboard provides:
 
@@ -183,7 +192,8 @@ AI
 Component	Technology	Role
 LLM Inference	Ollama	Local LLM for RAG
 Embeddings	nomic-embed-text	Vector embeddings
-Generation	llama3.2	Answer generation
+Generation	A supported Ollama chat model (e.g., llama3.2, gemma3, mistral)	Answer generation
+Optional Cloud LLM	Google Gemini	Alternative inference path
 Frontend
 Component	Technology	Role
 Framework	React 18	UI components
@@ -225,6 +235,7 @@ BloodFlow_AI/
 │   └── vite.config.js           # Vite configuration
 │
 ├── AI_CONTEXT/                   # Architecture documentation
+├── media/                        # Screenshots & assets
 ├── requirements.txt             # Python dependencies
 └── README.md                    # This file
 🚨 Before You Run
@@ -420,7 +431,7 @@ Frontend is running (http://localhost:5173 loads)
 
 Ollama is running (ollama list shows models)
 
-llama3.2 is downloaded
+Ollama chat model is downloaded
 
 nomic-embed-text is downloaded
 
@@ -435,16 +446,16 @@ Incident report is generated
 📸 Screenshots
 Dashboard
 text
-TODO: Add screenshot of the dashboard
+Coming Soon: Screenshot of the BloodFlow AI dashboard showing workflow monitoring, donor ranking, and explainability panels.
 Workflow Timeline
 text
-TODO: Add screenshot of the workflow timeline
+Coming Soon: Screenshot of the real-time workflow timeline visualization.
 Incident Report
 text
-TODO: Add screenshot of the incident report
+Coming Soon: Screenshot of the automatically generated incident report.
 RAG Copilot
 text
-TODO: Add screenshot of the RAG Copilot
+Coming Soon: Screenshot of the WHO guideline RAG assistant interface.
 🎯 Project Goals
 ✅ Demonstrate collaborative AI agents
 
@@ -470,7 +481,7 @@ Low	Mobile Application	Donor mobile app
 Low	Multi-Hospital Coordination	Cross-hospital workflow
 👥 Contributors
 Wasemah Binta Amran
-Project Lead • AI Systems Engineer
+Project Lead & AI Systems Engineer
 
 System Architecture & Design
 
@@ -478,9 +489,9 @@ Multi-Agent System Development
 
 Backend Engineering (FastAPI)
 
-RAG Pipeline Development
-
 Explainability Engine
+
+RAG Pipeline Development
 
 FastAPI Integration
 
@@ -500,13 +511,13 @@ Frontend-Backend Integration
 Dashboard Components
 
 Farjana Binta Amran
-Media & Video Production
+Media & Presentation
 
 Demo Video Editing
 
-Visual Presentation
+Visual Assets
 
-Media Assets
+Media Gallery Preparation
 
 🙏 Acknowledgments
 This project was developed as part of the Kaggle AI Agents Intensive Capstone.
@@ -516,20 +527,25 @@ We gratefully acknowledge the use of AI-assisted development tools—including G
 Special thanks to Farjana Binta Amran for editing and producing the project demonstration video.
 
 📚 References
-World Health Organization — Blood Donation and Transfusion Safety Guidelines. (2023)
+World Health Organization. Blood Donor Selection: Guidelines on Assessing Donor Suitability for Blood Donation. 2012.
 
-Google — Agent Development Kit (ADK). (2025)
+FastAPI Documentation. FastAPI: High-Performance Python API Framework. https://fastapi.tiangolo.com
 
-Anthropic — Model Context Protocol (MCP). (2025)
+React Documentation. React: A JavaScript Library for Building User Interfaces. https://react.dev
 
-Ollama — Local LLM Inference. (2026)
+Ollama Documentation. Ollama: Get Up and Running with Large Language Models Locally. https://ollama.com
 
-Kaggle — AI Agents Intensive Capstone. (2026)
+Google Agent Development Kit (ADK). Build and Deploy AI Agents. https://google.github.io/adk-docs/
 
-FastAPI — High-Performance Python API Framework. (2025)
+Model Context Protocol (MCP). Anthropic's Model Context Protocol for AI Tools. https://modelcontextprotocol.io
+
+Kaggle. AI Agents Intensive Capstone. https://www.kaggle.com/
 
 📜 License
 This project is intended for educational and research purposes within the Kaggle AI Agents Intensive Capstone.
+
+⚠️ Disclaimer
+BloodFlow AI is a research and educational prototype developed for the Kaggle AI Agents Intensive Capstone. It is not intended for real-world clinical deployment without appropriate medical validation, regulatory approval, and integration with healthcare systems.
 
 🌟 Star Us!
 If you find BloodFlow AI useful, please consider starring the repository on GitHub. It helps others discover the project.
