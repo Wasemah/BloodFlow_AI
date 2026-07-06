@@ -12,19 +12,23 @@ The system combines Multi-Agent Orchestration, Retrieval-Augmented Generation (R
 
 BloodFlow AI supports both local inference through Ollama and optional cloud inference using Google Gemini, depending on configuration. This flexibility enables offline execution, reduces latency, protects sensitive healthcare-inspired data, and removes dependency on external APIs during demonstrations.
 
-✨ Key Features
-Feature	Description
-🤖 Multi-Agent AI Workflow	Specialized agents collaborate to process emergency requests
-🏥 Emergency Request Triage	Converts free-text hospital requests into structured data
-🩸 Blood Compatibility Matching	Medical rule-based donor compatibility filtering
-📍 Donor Ranking & Prioritization	Weighted multi-factor scoring for optimal donor selection
-💬 Communication Workflow	Sequential outreach with memory cooldown
-🧠 Explainable AI Decision Engine	Transparent score breakdowns and natural-language reasoning
-📚 WHO Guideline RAG Assistant	Locally indexed retrieval-augmented medical guidance
-📊 Incident Report Generation	Complete markdown audit trail for every workflow
-📈 Real-time Dashboard	Live workflow monitoring and visualization
-🖥️ React Frontend	Intuitive interface for hospital coordinators
-🏗️ System Architecture
+## ✨ Key Features
+
+| Feature | Description |
+| :--- | :--- |
+| 🤖 **Multi-Agent AI Workflow** | Specialized agents collaborate to process emergency requests |
+| 🏥 **Emergency Request Triage** | Converts free-text hospital requests into structured data |
+| 🩸 **Blood Compatibility Matching** | Medical rule-based donor compatibility filtering |
+| 📍 **Donor Ranking & Prioritization** | Weighted multi-factor scoring for optimal donor selection |
+| 💬 **Communication Workflow** | Sequential outreach with memory cooldown |
+| 🧠 **Explainable AI Decision Engine** | Transparent score breakdowns and natural-language reasoning |
+| 📚 **WHO Guideline RAG Assistant** | Locally indexed retrieval-augmented medical guidance |
+| 📊 **Incident Report Generation** | Complete markdown audit trail for every workflow |
+| 📈 **Real-time Dashboard** | Live workflow monitoring and visualization |
+| 🖥️ **React Frontend** | Intuitive interface for hospital coordinators |
+| 🏠 **Local AI Inference (Ollama)** | Run entirely offline without cloud API keys, reducing cost, improving privacy, and enabling deployment in environments with unreliable internet connectivity. |
+
+
 text
 ┌─────────────────────────────────────────────────────────────────┐
 │                    BLOODFLOW AI PIPELINE                        │
@@ -136,16 +140,40 @@ Performance metrics
 
 Confidence score
 
-🧠 AI Components
-Multi-Agent System
-Agent	Responsibility
-Orchestrator	Coordinates workflow, retries, and metrics
-Emergency Triage	Parses free-text hospital requests
-Donor Matching	Filters and ranks donors by compatibility
-Communication	Simulates sequential donor outreach
-Explainability	Generates score breakdowns and reasoning
-Memory	Tracks donor cooldown and communication history
-Retrieval-Augmented Generation (RAG)
+## 💡 Why Multi-Agent Instead of One LLM?
+
+A monolithic LLM approach often suffers from:
+
+| Issue | Impact |
+| :--- | :--- |
+| **Context Overload** | Degraded performance with long contexts |
+| **Difficult Debugging** | Black-box behavior |
+| **Limited Explainability** | No component-level reasoning |
+| **Tightly Coupled Logic** | Hard to modify or extend |
+| **API Dependency** | Requires cloud connectivity and incurs usage costs |
+
+**BloodFlow AI's Multi-Agent Approach:**
+
+| Advantage | Benefit |
+| :--- | :--- |
+| **Modularity** | Each component independently testable |
+| **Reusability** | Agents can be repurposed |
+| **Transparency** | Clear responsibilities and interfaces |
+| **Extensibility** | Easy to add new agents |
+| **Observability** | Granular telemetry and metrics |
+| **Local Inference** | Run entirely offline using Ollama, eliminating API costs and cloud dependencies |
+
+## ⚙️ Technical Stack
+
+### AI Components
+
+| Component | Technology | Role |
+| :--- | :--- | :--- |
+| **Local LLM Inference** | Ollama | Offline execution, no API keys, privacy-first |
+| **Embeddings** | nomic-embed-text | Vector embeddings for RAG |
+| **Generation** | A supported Ollama chat model (e.g., llama3.2, gemma3, mistral) | Answer generation |
+| **Optional Cloud LLM** | Google Gemini | Alternative inference path |
+
 The project includes a fully functional local RAG pipeline powered by Ollama:
 
 ✅ WHO guideline retrieval
@@ -443,19 +471,7 @@ Workflow completes successfully
 
 Incident report is generated
 
-📸 Screenshots
-Dashboard
-text
-Coming Soon: Screenshot of the BloodFlow AI dashboard showing workflow monitoring, donor ranking, and explainability panels.
-Workflow Timeline
-text
-Coming Soon: Screenshot of the real-time workflow timeline visualization.
-Incident Report
-text
-Coming Soon: Screenshot of the automatically generated incident report.
-RAG Copilot
-text
-Coming Soon: Screenshot of the WHO guideline RAG assistant interface.
+
 🎯 Project Goals
 ✅ Demonstrate collaborative AI agents
 
