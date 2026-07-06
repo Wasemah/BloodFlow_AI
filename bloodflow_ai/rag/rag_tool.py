@@ -43,7 +43,14 @@ class RAGTool:
         Returns None if Ollama is unavailable or fails.
         """
         try:
-            from ollama import chat
+            import os
+            from ollama import Client
+            
+            host = os.getenv("OLLAMA_HOST", "http://127.0.0.1:11434")
+            if "0.0.0.0" in host:
+                host = host.replace("0.0.0.0", "127.0.0.1")
+                
+            client = Client(host=host)
             
             system_prompt = """You are BloodFlow AI, a medical assistant.
 
@@ -66,7 +73,7 @@ QUESTION: {question}
 
 ANSWER:"""
             
-            response = chat(
+            response = client.chat(
                 model="llama3.2",
                 messages=[
                     {"role": "system", "content": system_prompt},
@@ -81,7 +88,7 @@ ANSWER:"""
             return response.message.content.strip()
             
         except Exception as e:
-            print(f"[RAG] ⚠️ Ollama error: {e}")
+            print(f"[RAG] [WARNING] Ollama error: {e}")
             return None
     
     def answer(self, question: str) -> RAGResult:
@@ -125,12 +132,12 @@ ANSWER:"""
                 # Fallback: return the most relevant chunk
                 answer = f"Relevant guideline:\n\n{results[0]['text']}"
                 confidence = 0.4
-                print("[RAG] 📄 Using retrieval-only fallback")
+                print("[RAG] [INFO] Using retrieval-only fallback")
             else:
                 confidence = 0.8
                 
         except Exception as e:
-            print(f"[RAG] ❌ Error: {e}")
+            print(f"[RAG] [ERROR] Error: {e}")
             answer = f"Relevant guideline:\n\n{results[0]['text']}"
             confidence = 0.4
         

@@ -45,19 +45,19 @@ class OllamaProvider:
             # Check if model exists
             if any(self.model in name for name in model_names):
                 self._available = True
-                print(f"[Ollama] ✅ Using model: {self.model}")
+                print(f"[Ollama] [SUCCESS] Using model: {self.model}")
                 return True
             
-            print(f"[Ollama] ⚠️ Model '{self.model}' not found. Run: ollama pull {self.model}")
+            print(f"[Ollama] [WARNING] Model '{self.model}' not found. Run: ollama pull {self.model}")
             self._available = False
             return False
             
         except ImportError:
-            print("[Ollama] ❌ 'ollama' package not installed. Run: pip install ollama")
+            print("[Ollama] [ERROR] 'ollama' package not installed. Run: pip install ollama")
             self._available = False
             return False
         except Exception as e:
-            print(f"[Ollama] ❌ Connection error: {e}")
+            print(f"[Ollama] [ERROR] Connection error: {e}")
             print("[Ollama] Make sure Ollama is running: ollama serve")
             self._available = False
             return False
@@ -122,7 +122,7 @@ ANSWER:"""
             return None
             
         except Exception as e:
-            print(f"[Ollama] ❌ Generation error: {e}")
+            print(f"[Ollama] [ERROR] Generation error: {e}")
             return None
 
 

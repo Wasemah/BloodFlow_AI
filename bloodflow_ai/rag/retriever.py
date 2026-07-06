@@ -32,20 +32,20 @@ def load_guidelines(file_path: Optional[Path] = None) -> int:
     if file_path is None:
         file_path = GUIDELINES_PATH
     
-    print(f"[RAG] 📂 Looking for guidelines at: {file_path}")
-    print(f"[RAG] 📂 File exists: {file_path.exists()}")
+    print(f"[RAG] [INFO] Looking for guidelines at: {file_path}")
+    print(f"[RAG] [INFO] File exists: {file_path.exists()}")
     
     if not file_path.exists():
-        print(f"[RAG] ❌ Guidelines not found: {file_path}")
+        print(f"[RAG] [ERROR] Guidelines not found: {file_path}")
         return 0
     
     with open(file_path, 'r', encoding='utf-8') as f:
         text = f.read()
     
-    print(f"[RAG] 📖 Loaded guidelines ({len(text)} characters)")
+    print(f"[RAG] [INFO] Loaded guidelines ({len(text)} characters)")
     
     chunks = chunk_document(text)
-    print(f"[RAG] 📄 Created {len(chunks)} chunks")
+    print(f"[RAG] [INFO] Created {len(chunks)} chunks")
     
     # Generate embeddings (will use fallback if Gemini fails)
     chunks_with_embeddings = batch_embed(chunks)
@@ -60,7 +60,7 @@ def load_guidelines(file_path: Optional[Path] = None) -> int:
     _VECTOR_STORE["documents"] = [c["text"] for c in chunks_with_embeddings]
     _VECTOR_STORE["loaded"] = True
     
-    print(f"[RAG] ✅ Indexed {len(chunks)} chunks")
+    print(f"[RAG] [SUCCESS] Indexed {len(chunks)} chunks")
     return len(chunks)
 
 
@@ -73,7 +73,7 @@ def search_guidelines(
     global _VECTOR_STORE
     
     if not _VECTOR_STORE["loaded"]:
-        print("[RAG] ⚠️ No guidelines loaded. Call load_guidelines() first.")
+        print("[RAG] [WARNING] No guidelines loaded. Call load_guidelines() first.")
         return []
     
     query_embedding = generate_embedding(query)

@@ -20,7 +20,7 @@ def run_demo():
     # Load guidelines
     print("\n[1] Loading guidelines...")
     count = rag.load()
-    print(f"    ✅ Loaded {count} chunks")
+    print(f"    [SUCCESS] Loaded {count} chunks")
     
     # Test questions
     questions = [
@@ -37,26 +37,26 @@ def run_demo():
     print("=" * 60)
     
     for question in questions:
-        print(f"\n📝 Question: {question}")
+        print(f"\n[QUESTION] Question: {question}")
         print("-" * 40)
         
         result = rag.ask(question)
         
         # Show retrieved source (optional)
         if result.get("sources"):
-            print(f"📚 Source: {', '.join(result['sources'])}")
+            print(f"[SOURCE] Source: {', '.join(result['sources'])}")
         
         # Show answer
         answer = result.get("answer", "No answer generated")
-        print(f"📤 Answer: {answer}")
+        print(f"[ANSWER] Answer: {answer}")
         
         # Show provider info
         provider = result.get("provider", "unknown")
-        print(f"🔧 Provider: {provider}")
-        print(f"📊 Confidence: {result.get('confidence', 0.0):.2f}")
+        print(f"[PROVIDER] Provider: {provider}")
+        print(f"[CONFIDENCE] Confidence: {result.get('confidence', 0.0):.2f}")
     
     print("\n" + "=" * 60)
-    print("✅ RAG DEMO COMPLETE")
+    print("[SUCCESS] RAG DEMO COMPLETE")
     print("=" * 60)
 
 

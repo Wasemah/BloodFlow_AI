@@ -1,5 +1,12 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useWorkflowContext } from '../context/WorkflowContext';
+import PipelineStepper from './PipelineStepper';
+
+const EXAMPLE_REQUESTS = [
+  'Need O- blood at Square Hospital before 8 PM',
+  'Urgent: A+ whole blood at DMCH, patient post-surgery',
+  'B- platelet required at United Hospital, Gulshan',
+];
 
 const CommandCenter = () => {
   const { state, runWorkflow } = useWorkflowContext();
@@ -8,67 +15,122 @@ const CommandCenter = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const trimmedInput = input.trim();
-
-    if (!trimmedInput) {
-      return;
-    }
-
+    if (!trimmedInput) return;
     try {
       await runWorkflow(trimmedInput);
-    } catch (error) {
-      // Error state is managed by the context.
-    }
+    } catch (_) { /* error managed by context */ }
   };
 
-  const statusLabel = state.loading
-    ? 'Running workflow...'
-    : state.error
-      ? 'Workflow error'
-      : state.workflow
-        ? 'Workflow complete'
-        : 'Ready';
+  const handleExample = (ex) => setInput(ex);
 
   return (
-    <div style={{ border: '1px solid #dce4ee', borderRadius: 12, padding: 16, background: '#fff' }}>
-      <h3 style={{ marginBottom: 8 }}>Command Center</h3>
-      <p style={{ marginBottom: 12, color: '#4b5563' }}>
-        Submit a hospital request to start the existing backend workflow.
-      </p>
+    <div className="glass-card" style={{ padding: '28px' }}>
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+        <div>
+          <h3 style={{ color: 'var(--text-primary)', marginBottom: '4px' }}>Command Center</h3>
+          <p style={{ fontSize: '0.875rem' }}>Submit an emergency request to activate the AI pipeline.</p>
+        </div>
+        {state.loading && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '5px 12px',
+            borderRadius: 'var(--radius-full)',
+            background: 'rgba(99,102,241,0.15)',
+            border: '1px solid rgba(99,102,241,0.3)',
+            fontSize: '0.75rem',
+            fontWeight: 600,
+            color: '#818cf8',
+          }}>
+            <span style={{ animation: 'glow-pulse 1.5s ease infinite' }}>●</span>
+            Processing
+          </div>
+        )}
+      </div>
 
+      {/* Form */}
       <form onSubmit={handleSubmit}>
         <textarea
+          className="form-textarea"
           value={input}
-          onChange={(event) => setInput(event.target.value)}
-          placeholder="Example: Need O- blood at Square Hospital before 8 PM"
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Describe the emergency: blood type, location, urgency, deadline..."
           rows={4}
-          style={{ width: '100%', padding: 10, border: '1px solid #cbd5e1', borderRadius: 8, marginBottom: 10, resize: 'vertical' }}
+          disabled={state.loading}
+          style={{ marginBottom: '12px' }}
         />
 
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+        {/* Quick examples */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', alignSelf: 'center' }}>Quick:</span>
+          {EXAMPLE_REQUESTS.map((ex, i) => (
+            <button
+              key={i}
+              type="button"
+              className="chip"
+              onClick={() => handleExample(ex)}
+              disabled={state.loading}
+            >
+              {ex.slice(0, 42)}{ex.length > 42 ? '…' : ''}
+            </button>
+          ))}
+        </div>
+
+        {/* Actions */}
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <button
             type="submit"
-            disabled={state.loading}
-            style={{ padding: '10px 14px', border: 'none', borderRadius: 8, background: '#0066cc', color: '#fff', cursor: state.loading ? 'wait' : 'pointer' }}
+            className={`btn ${state.loading ? 'btn-ghost' : 'btn-critical'}`}
+            disabled={state.loading || !input.trim()}
           >
-            {state.loading ? 'Running...' : 'Run Workflow'}
+            {state.loading ? (
+              <>
+                <span style={{ animation: 'spin 1.2s linear infinite', display: 'inline-block' }}>◌</span>
+                Running Pipeline...
+              </>
+            ) : (
+              <>♥ Dispatch Workflow</>
+            )}
           </button>
 
-          <span style={{ fontSize: 13, color: state.error ? '#b91c1c' : state.workflow ? '#047857' : '#4b5563' }}>
-            {statusLabel}
-          </span>
+          {state.workflow && !state.loading && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{
+                width: '8px', height: '8px', borderRadius: '50%',
+                background: state.workflow.status === 'success' ? 'var(--success)' : 'var(--critical)',
+                display: 'inline-block',
+              }} />
+              <span style={{
+                fontSize: '0.8125rem',
+                fontWeight: 600,
+                color: state.workflow.status === 'success' ? 'var(--success)' : 'var(--critical)',
+              }}>
+                {state.workflow.status === 'success' ? 'Workflow Complete' : 'Workflow Failed'}
+              </span>
+            </div>
+          )}
         </div>
       </form>
 
-      {state.error && <p style={{ marginTop: 12, color: '#b91c1c' }}>Error: {state.error}</p>}
-
-      {state.workflow && (
-        <div style={{ marginTop: 14, padding: 12, background: '#f8fafc', borderRadius: 8 }}>
-          <p><strong>Status:</strong> {state.workflow.status}</p>
-          <p><strong>Message:</strong> {state.workflow.message}</p>
-          {state.workflow.donor_contacted && <p><strong>Donor:</strong> {state.workflow.donor_contacted}</p>}
-          {state.workflow.total_duration ? <p><strong>Duration:</strong> {state.workflow.total_duration}s</p> : null}
+      {/* Error */}
+      {state.error && (
+        <div style={{
+          marginTop: '16px',
+          padding: '12px 16px',
+          borderRadius: 'var(--radius-md)',
+          background: 'var(--critical-bg)',
+          border: '1px solid rgba(244,63,94,0.25)',
+          color: 'var(--critical)',
+          fontSize: '0.875rem',
+        }}>
+          ⚠ {state.error}
         </div>
       )}
+
+      {/* Pipeline Stepper */}
+      <PipelineStepper loading={state.loading} done={!!state.workflow && !state.loading} />
     </div>
   );
 };

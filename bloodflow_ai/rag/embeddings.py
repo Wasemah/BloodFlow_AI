@@ -16,9 +16,15 @@ def generate_embedding(text: str) -> List[float]:
         List of floats (embedding vector)
     """
     try:
-        from ollama import embed
+        import os
+        from ollama import Client
         
-        response = embed(
+        host = os.getenv("OLLAMA_HOST", "http://127.0.0.1:11434")
+        if "0.0.0.0" in host:
+            host = host.replace("0.0.0.0", "127.0.0.1")
+            
+        client = Client(host=host)
+        response = client.embed(
             model="nomic-embed-text",
             input=text
         )
@@ -26,10 +32,10 @@ def generate_embedding(text: str) -> List[float]:
         return response.embeddings[0]
         
     except ImportError:
-        print("[Embeddings] ❌ 'ollama' package not installed. Run: pip install ollama")
+        print("[Embeddings] [ERROR] 'ollama' package not installed. Run: pip install ollama")
         return _fallback_embedding(text)
     except Exception as e:
-        print(f"[Embeddings] ⚠️ Error: {e}")
+        print(f"[Embeddings] [WARNING] Error: {e}")
         print("[Embeddings] Make sure Ollama is running and nomic-embed-text is pulled:")
         print("[Embeddings]   ollama serve")
         print("[Embeddings]   ollama pull nomic-embed-text")
