@@ -29,51 +29,56 @@ BloodFlow AI supports both local inference through Ollama and optional cloud inf
 | 🏠 **Local AI Inference (Ollama)** | Run entirely offline without cloud API keys, reducing cost, improving privacy, and enabling deployment in environments with unreliable internet connectivity. |
 
 
-text
 
 
+## 🏗️ System Architecture
 
-┌─────────────────────────────────────────────────────────────┐
-│                    BLOODFLOW AI PIPELINE                    │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│    Hospital Emergency Request (Raw Text)                    │
-│                         │                                   │
-│                         ▼                                   │
-│              ┌─────────────────┐                            │
-│              │   ORCHESTRATOR  │  ← Coordinates workflow   │
-│              └────────┬────────┘                            │
-│                       │                                     │
-│        ┌──────────────┼──────────────┐                      │
-│        ▼              ▼              ▼                      │
-│  ┌───────────┐  ┌───────────┐  ┌───────────┐               │
-│  │  TRIAGE   │  │ MATCHING  │  │    COMM   │               │
-│  └─────┬─────┘  └─────┬─────┘  └─────┬─────┘               │
-│        │              │              │                      │
-│        └──────────────┼──────────────┘                      │
-│                       │                                     │
-│                       ▼                                     │
-│              ┌─────────────────┐                            │
-│              │     MEMORY      │                            │
-│              └────────┬────────┘                            │
-│                       │                                     │
-│                       ▼                                     │
-│              ┌─────────────────┐                            │
-│              │  EXPLAINABILITY │  ← Score breakdown        │
-│              └────────┬────────┘                            │
-│                       │                                     │
-│                       ▼                                     │
-│              ┌─────────────────┐                            │
-│              │    WHO RAG      │  ← Medical guidance        │
-│              └────────┬────────┘                            │
-│                       │                                     │
-│                       ▼                                     │
-│              ┌─────────────────┐                            │
-│              │ DASHBOARD +     │                            │
-│              │    REPORT       │                            │
-│              └─────────────────┘                            │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```
+                    ┌─────────────────────────┐
+                    │  Hospital Request       │
+                    │  (Raw Text)             │
+                    └───────────┬─────────────┘
+                                │
+                                ▼
+                    ┌─────────────────────────┐
+                    │      ORCHESTRATOR       │
+                    │  Coordinates Workflow   │
+                    └───────────┬─────────────┘
+                                │
+           ┌────────────────────┼────────────────────┐
+           │                    │                    │
+           ▼                    ▼                    ▼
+┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
+│  Emergency       │ │  Donor           │ │  Communication   │
+│  Triage          │ │  Matching        │ │  Agent           │
+│  (Parse Request) │ │  (Rank Donors)   │ │  (Notify Donors) │
+└────────┬─────────┘ └────────┬─────────┘ └────────┬─────────┘
+         │                    │                    │
+         └────────────────────┼────────────────────┘
+                              │
+                              ▼
+                    ┌─────────────────────────┐
+                    │        MEMORY           │
+                    │  Track Donor History    │
+                    └───────────┬─────────────┘
+                                │
+                                ▼
+                    ┌─────────────────────────┐
+                    │    EXPLAINABILITY       │
+                    │  Score Breakdown        │
+                    └───────────┬─────────────┘
+                                │
+                                ▼
+                    ┌─────────────────────────┐
+                    │      WHO RAG            │
+                    │  Medical Guidance       │
+                    └───────────┬─────────────┘
+                                │
+                                ▼
+                    ┌─────────────────────────┐
+                    │   DASHBOARD + REPORT    │
+                    └─────────────────────────┘
+```
 
 
 🔄 Workflow
