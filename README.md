@@ -1,5 +1,8 @@
 🩸 BloodFlow AI
-<p align="center"> <img src="media/dashboard.png" alt="BloodFlow AI Dashboard" width="800"/> </p>
+<p align="center">
+  <img src="media/dashboard.png" alt="BloodFlow AI Dashboard" width="100%">
+</p>
+
 A Multi-Agent AI System for Emergency Blood Donation Coordination
 
 Built for the Kaggle AI Agents Intensive Capstone, BloodFlow AI demonstrates how specialized AI agents can collaboratively process emergency blood requests, identify compatible donors, coordinate outreach, and generate transparent decision reports.
