@@ -1,7 +1,5 @@
 🩸 BloodFlow AI
-<p align="center">
-  <img src="frontend/src/media/dashboard.png" alt="BloodFlow AI Dashboard" width="100%">
-</p>
+
 
 A Multi-Agent AI System for Emergency Blood Donation Coordination
 
